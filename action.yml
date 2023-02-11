@@ -13,11 +13,11 @@ inputs:
     default: 'README.md'
   version:
     description: "The version to update."
-    required: true
+    required: false
     default: ${{ github.ref_name }}
   old-version:
     description: "The old version to replace."
-    required: true
+    required: false
     default: ''
   prefix:
     description: "The prefix of version to search in the files."
@@ -35,14 +35,6 @@ inputs:
     description: "Checkout the repository."
     required: false
     default: 'true'
-  GITHUB_TOKEN:
-    description: "The GitHub token."
-    required: false
-    default: ''
-  commit-message:
-    description: "The commit message."
-    required: false
-    default: 'Update version in files'
   
 
 
@@ -74,10 +66,3 @@ runs:
       shell: bash
       run: |
         sed -i '' "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
-
-    - uses: EndBug/add-and-commit@v9
-      with:
-        default_author: github_actions
-      env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-        
