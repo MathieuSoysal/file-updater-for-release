@@ -35,9 +35,6 @@ inputs:
     description: "Checkout the repository."
     required: false
     default: 'true'
-  repo-token:
-    description: "The token to use to commit the changes."
-    required: false
   
 
 
