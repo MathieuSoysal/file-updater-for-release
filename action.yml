@@ -48,6 +48,7 @@ runs:
       with:
         fetch-depth: 0
         ref: main
+        token: ${{ inputs.repo-token }}
 
     - name: Set old version
       id: old-version
