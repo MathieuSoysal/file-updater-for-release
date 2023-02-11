@@ -82,7 +82,7 @@ runs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
-        git remote set-url --push origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }
+        git remote set-url --push origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}
         git commit -am "${{ inputs.commit-message }}"
         git push
       env:
