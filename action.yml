@@ -35,6 +35,9 @@ inputs:
     description: "Checkout the repository."
     required: false
     default: 'true'
+  repo-token:
+    description: "The token to use to commit the changes."
+    required: false
   
 
 
@@ -44,6 +47,7 @@ runs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        ref: main
 
     - name: Set old version
       id: old-version
@@ -66,3 +70,11 @@ runs:
       shell: bash
       run: |
         sed -i '' "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
+
+    - uses: EndBug/add-and-commit@v9
+      with:
+        add: .
+        default_author: github_actions
+        message: "Update files"
+        push: true
+        token: ${{ inputs.repo-token }}

@@ -12,7 +12,5 @@ jobs:
         uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
           prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
+          repo-token: ${{ secrets.REPO_TOKEN }} # The token to use to commit the changes
 
-      - uses: EndBug/add-and-commit@v9
-        with:
-          default_author: github_actions
