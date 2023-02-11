@@ -6,7 +6,7 @@ Update automatically the old version in your readme (or other files) with your n
 
 ## Usage
 
-### With automatic commit
+### With pull request
 
 The workflow, usually declared in `.github/workflows/post-release.yml`, looks like:
 
@@ -26,17 +26,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.0
+        uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          prefix: "MathieuSoysal/file-updater-for-release@" # Prefix before the version, default is: ""
-          suffix: ""
-          files: README.md # List of files to update
-          commit-message: "Update version in README.md" # Commit message, default is: "Update version in files"
+		  files: README.md # List of files to update
+          prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # You need to create your own token with pull request rights
+          commit-message: update readme
+          title: Update readme
+          body: Update readme to reflect release changes
+          branch: update-readme
+          base: main
 ```
 </details>
 
-### Without giving GITHUB_TOKEN
+### With directly commit
 
 The workflow, usually declared in `.github/workflows/post-release.yml`, looks like:
 
@@ -46,7 +53,7 @@ The workflow, usually declared in `.github/workflows/post-release.yml`, looks li
 
 
 ```YAML
-name: Update files
+name: Update files with commit
 
 on:
   release:
@@ -56,19 +63,28 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }} # You need to create your own token with commit rights
+
+
       - name: Update files
         uses: MathieuSoysal/file-updater-for-release@v1.0.0
         with:
           files: README.md # List of files to update
-          with-commit: false # If you don't want to commit the changes
+          prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
+          with-checkout: false # If you don't want to checkout the repo, default is: true
       
-      - name: Commit changes
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add README.md
-          git commit -m "Update version in README.md"
-          git push
+      - name: Push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          committer_name: GitHub Actions
+          committer_email: actions@github.com
+          add: .
+          message: 'update files'
 ```
 </details>
 

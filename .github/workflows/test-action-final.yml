@@ -39,7 +39,6 @@ jobs:
           old-version: "v1.2.3"
           prefix: "JAVAVERSION"
           suffix: "JAVAVERSION"
-          with-commit: false
 
       - name: Test if file 1 have been updated
         uses: GuillaumeFalourd/assert-command-line-output@v2

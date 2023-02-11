@@ -42,6 +42,7 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v3
+      if: inputs.with-checkout == 'true'
       with:
         fetch-depth: 0
 
