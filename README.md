@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.0
+        uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           prefix: "MathieuSoysal/file-updater-for-release@" # Prefix before the version, default is: ""
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.0
+        uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
           files: README.md # List of files to update
           with-commit: false # If you don't want to commit the changes
