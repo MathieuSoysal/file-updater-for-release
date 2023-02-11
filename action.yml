@@ -64,10 +64,17 @@ runs:
           echo "old-version=${{ inputs.old-version }}" >> $GITHUB_OUTPUT
         fi
 
-    - name: Update files
+    - name: Update files not macos
+      if: runner.os != 'macOS'
       shell: bash
       run: |
         sed -i "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
+
+    - name: Update files macos
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        sed -i '' "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
 
     - name: Commit changes
       if: inputs.with-commit == 'true'
