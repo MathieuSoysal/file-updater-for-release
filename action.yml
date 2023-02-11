@@ -75,16 +75,9 @@ runs:
       run: |
         sed -i '' "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
 
-    - name: Commit changes
-      if: inputs.with-commit == 'true'
-      shell: bash
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add .
-        git remote set-url --push origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}
-        git commit -am "${{ inputs.commit-message }}"
-        git push
+    - uses: EndBug/add-and-commit@v9
+      with:
+        default_author: github_actions
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         
