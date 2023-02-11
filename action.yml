@@ -84,7 +84,7 @@ runs:
         git config --local user.name "github-actions[bot]"
         git add ${{ inputs.files }}
         git commit -m "${{ inputs.commit-message }}" || true
-        git push
+        git push origin HEAD:${{ github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         
