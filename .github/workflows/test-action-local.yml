@@ -1,6 +1,6 @@
 name: Test Actions locally
 
-on: [push, pull_request]
+on: [workflow_dispatch]
 
 jobs:
   check-files: # Check the files
