@@ -1,0 +1,54 @@
+name: Test Actions locally
+
+on: [push, pull_request]
+
+jobs:
+  check-files: # Check the files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: GuillaumeFalourd/assert-command-line-output@v2
+        with:
+          command_line: cat tests/test1.txt
+          contains: JAVAVERSIONv1.2.3JAVAVERSION
+
+      - uses: GuillaumeFalourd/assert-command-line-output@v2
+        with:
+          command_line: cat tests/test2.txt
+          contains: JAVAVERSIONv1.2.3JAVAVERSION
+
+  test-for-github-workflow: # Test the action with the GitHub workflow
+    name: Test update-readme-files action
+    needs: check-files
+    continue-on-error: true
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Update files
+        uses: ./
+        with:
+          files: tests/test1.txt tests/test2.txt
+          version: "v2.0.0"
+          old-version: "v1.2.3"
+          prefix: "JAVAVERSION"
+          suffix: "JAVAVERSION"
+          with-commit: false
+
+      - name: Test if file 1 have been updated
+        uses: GuillaumeFalourd/assert-command-line-output@v2
+        with:
+          command_line: cat tests/test1.txt
+          contains: JAVAVERSIONv2.0.0JAVAVERSION
+
+      - name: Test if file 2 have been updated
+        uses: GuillaumeFalourd/assert-command-line-output@v2
+        with:
+          command_line: cat tests/test2.txt
+          contains: JAVAVERSIONv2.0.0JAVAVERSION
