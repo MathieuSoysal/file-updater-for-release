@@ -1,0 +1,82 @@
+name: Readme - Files updater for release
+description: "Update automatically the old version in your readme (or other files) with your new tag version."
+branding:
+  icon: "book-open"
+  color: "white"
+
+inputs:
+
+  # Required inputs
+  files:
+    description: "The files to update."
+    required: true
+    default: 'README.md'
+  version:
+    description: "The version to update."
+    required: true
+    default: ${{ github.ref_name }}
+  old-version:
+    description: "The old version to replace."
+    required: true
+    default: ''
+  prefix:
+    description: "The prefix of version to search in the files."
+    required: false
+    default: ''
+  suffix:
+    description: "The suffix of version to search in the files."
+    required: false
+    default: ''
+  with-commit:
+    description: "Commit the changes."
+    required: false
+    default: 'true'
+  with-checkout:
+    description: "Checkout the repository."
+    required: false
+    default: 'true'
+  GITHUB_TOKEN:
+    description: "The GitHub token."
+    required: false
+    default: ''
+  commit-message:
+    description: "The commit message."
+    required: false
+    default: 'Update version in files'
+  
+
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      if: inputs.with-checkout == 'true'
+      with:
+        fetch-depth: 0
+
+    - name: Set old version
+      id: old-version
+      shell: bash
+      run: |
+        if [ -z "${{ inputs.old-version }}" ]; then
+          echo "old-version=$(git tag | tail -n 3 | head -n 1 | sed -e 's/\./\\./g')" >> $GITHUB_OUTPUT
+        else
+          echo "old-version=${{ inputs.old-version }}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Update files
+      shell: bash
+      run: |
+        sed -i "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
+
+    - name: Commit changes
+      if: inputs.with-commit == 'true'
+      shell: bash
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add ${{ inputs.files }}
+        git commit -m "${{ inputs.commit-message }}" || true
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        
