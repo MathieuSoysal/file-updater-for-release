@@ -10,7 +10,7 @@ Update automatically the old version in your readme (or other files) with your n
 OR
 
 
-- Instead of use `${{ secrets.GITHUB_TOKEN }}` use a GitHub [Personnal Acces Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token) like : `${{ secrets.PAT }}`.
+- Instead of use `${{ secrets.GITHUB_TOKEN }}` in GitHub Actions use a GitHub [Personnal Acces Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token) like : `${{ secrets.PAT }}`.
 
 ## Usage
 
