@@ -73,7 +73,7 @@ jobs:
 
 
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.0
+        uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
           files: README.md # List of files to update
           prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
