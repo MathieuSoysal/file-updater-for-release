@@ -6,7 +6,10 @@ Update automatically the old version in your readme (or other files) with your n
 
 ## Requirements
 - You need to give permission to your GitHub Actions to create a pull request in your GitHub repo settings *(Settings -> Actions -> General)*.   
+
 OR
+
+
 - Instead of use `${{ secrets.GITHUB_TOKEN }}` use a GitHub [Personnal Acces Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token) like : `${{ secrets.PAT }}`.
 
 ## Usage
