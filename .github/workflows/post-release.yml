@@ -1,4 +1,4 @@
-name: Update files with commit
+name: Update files
 
 on:
   release:
@@ -8,26 +8,18 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }} # You need to create your own token with commit rights
-          ref: main # The branch you want to commit to
-
-
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.0
+        uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
           files: README.md # List of files to update
           prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
-          with-checkout: false # If you don't want to checkout the repo, default is: true
-      
-      - name: Push changes
-        uses: EndBug/add-and-commit@v9
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          committer_name: GitHub Actions
-          committer_email: actions@github.com
-          add: .
-          message: 'update files'
+          token: ${{ secrets.GITHUB_TOKEN }} # You need to create your own token with pull request rights
+          commit-message: update readme
+          title: Update readme
+          body: Update readme to reflect release changes
+          branch: update-readme
+          base: main

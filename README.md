@@ -28,7 +28,7 @@ jobs:
       - name: Update files
         uses: MathieuSoysal/file-updater-for-release@v1.0.1
         with:
-		  files: README.md # List of files to update
+          files: README.md # List of files to update
           prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
 
       - name: Create Pull Request
@@ -69,6 +69,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }} # You need to create your own token with commit rights
+          ref: main # The branch you want to commit to
 
 
       - name: Update files
