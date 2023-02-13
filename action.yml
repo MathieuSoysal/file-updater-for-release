@@ -46,6 +46,13 @@ runs:
       with:
         fetch-depth: 0
 
+    - name: Escapes special characters
+      id: escape
+      shell: bash
+      run: |
+        echo "name=prefix::$(echo '${{ inputs.prefix }}' | sed 's/[]\/$*.^|[]/\\&/g')" >> $GITHUB_OUTPUT
+        echo "name=suffix::$(echo '${{ inputs.suffix }}' | sed 's/[]\/$*.^|[]/\\&/g')" >> $GITHUB_OUTPUT
+
     - name: Set old version
       id: old-version
       shell: bash
@@ -60,10 +67,10 @@ runs:
       if: runner.os != 'macOS'
       shell: bash
       run: |
-        sed -i "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
-
+        sed -i "s/${{ steps.escape.outputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ steps.escape.outputs.suffix}}/${{steps.escape.outputs.prefix}}${{ inputs.version }}${{steps.escape.outputs.suffix}}/g" ${{ inputs.files }}
+      
     - name: Update files macos
       if: runner.os == 'macOS'
       shell: bash
       run: |
-        sed -i '' "s/${{ inputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ inputs.suffix}}/${{inputs.prefix}}${{ inputs.version }}${{inputs.suffix}}/g" ${{ inputs.files }}
+        sed -i '' "s/${{ steps.escape.outputs.prefix}}${{ steps.old-version.outputs.old-version }}${{ steps.escape.outputs.suffix}}/${{steps.escape.outputs.prefix}}${{ inputs.version }}${{steps.escape.outputs.suffix}}/g" ${{ inputs.files }}

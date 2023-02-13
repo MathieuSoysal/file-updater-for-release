@@ -115,7 +115,7 @@ act -W .github/workflows/test-action-local.yml
 
 ### Stars 🎇
 
-If you like or use this project, please don't forget to give it a star ⭐️. Thanks!
+If you like or use this project, don't forget to give it a star ⭐️.
 
 ## License
 The Dockerfile and associated scripts and documentation in this project are released under the [Apache 2.0 License](https://github.com/MathieuSoysal/file-updater-for-release/blob/main/LICENSE).
