@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.2
+        uses: MathieuSoysal/file-updater-for-release@v1.0.3
         with:
           files: README.md # List of files to update
           prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
@@ -81,7 +81,7 @@ jobs:
 
 
       - name: Update files
-        uses: MathieuSoysal/file-updater-for-release@v1.0.2
+        uses: MathieuSoysal/file-updater-for-release@v1.0.3
         with:
           files: README.md # List of files to update
           prefix: "file-updater-for-release@" # Prefix before the version, default is: ""
