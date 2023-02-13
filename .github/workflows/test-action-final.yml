@@ -37,17 +37,17 @@ jobs:
           files: tests/test1.txt tests/test2.txt
           version: "v2.0.0"
           old-version: "v1.2.3"
-          prefix: "JAVAVERSION"
+          prefix: "JAVAVER/SION"
           suffix: "JAVAVERSION"
 
       - name: Test if file 1 have been updated
         uses: GuillaumeFalourd/assert-command-line-output@v2
         with:
           command_line: cat tests/test1.txt
-          contains: JAVAVERSIONv2.0.0JAVAVERSION
+          contains: JAVAVER/SIONv2.0.0JAVAVERSION
 
       - name: Test if file 2 have been updated
         uses: GuillaumeFalourd/assert-command-line-output@v2
         with:
           command_line: cat tests/test2.txt
-          contains: JAVAVERSIONv2.0.0JAVAVERSION
+          contains: JAVAVER/SIONv2.0.0JAVAVERSION
