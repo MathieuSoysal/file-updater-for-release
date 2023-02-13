@@ -51,7 +51,7 @@ runs:
       shell: bash
       run: |
         if [ -z "${{ inputs.old-version }}" ]; then
-          echo "old-version=$(git tag | tail -n 3 | head -n 1 | sed -e 's/\./\\./g')" >> $GITHUB_OUTPUT
+          echo "old-version=$(git tag | tail -n 3 | head -n 1)" >> $GITHUB_OUTPUT
         else
           echo "old-version=${{ inputs.old-version }}" >> $GITHUB_OUTPUT
         fi
